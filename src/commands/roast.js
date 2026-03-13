@@ -12,7 +12,7 @@ dotenv.config();
  * Main command handler — orchestrates analysis → roast → render.
  */
 export async function runRoast(options) {
-  const { repo, author, savage, compliment, limit } = options;
+  const { repo, author, savage, compliment, limit, share } = options;
 
   // ─── Check for API key ────────────────────────────────────────────
   if (!process.env.GEMINI_API_KEY) {
@@ -74,5 +74,5 @@ export async function runRoast(options) {
   }
 
   // ─── Step 3: Render output ────────────────────────────────────────
-  renderRoast(roastData, stats, { savage, compliment });
+  await renderRoast(roastData, stats, { savage, compliment, share });
 }

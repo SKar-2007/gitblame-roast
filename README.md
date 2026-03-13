@@ -81,6 +81,10 @@ gitblame-roast --savage
 # Compliment mode (for fragile devs 🌸)
 gitblame-roast --compliment
 
+# Generate a shareable PNG card
+# (optional output path, default: roast.png)
+gitblame-roast --share
+
 # Analyze more commits
 gitblame-roast --limit 500
 ```
@@ -166,7 +170,7 @@ gitblame-roast/
 
 ## Roadmap
 
-- [ ] `--share` flag: Generate a shareable PNG card
+- [x] `--share` flag: Generate a shareable PNG card
 - [ ] `--team` flag: Roast all authors, generate a leaderboard
 - [ ] GitHub Action: Auto-roast every PR as a bot comment
 - [ ] Detect TODO comments older than 1 year

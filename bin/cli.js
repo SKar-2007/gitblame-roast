@@ -25,6 +25,10 @@ program
   .option("-s, --savage", "No mercy mode 💀")
   .option("-n, --limit <number>", "Number of commits to analyze", "100")
   .option("--compliment", "Compliment mode (for fragile devs 🌸)")
+  .option(
+    "--share [output]",
+    "Generate a shareable PNG card of the roast (default: roast.png)"
+  )
   .action(runRoast);
 
 program.parse();

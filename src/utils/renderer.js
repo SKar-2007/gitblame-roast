@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import boxen from "boxen";
 import gradient from "gradient-string";
+import { generateShareCard } from "./shareCard.js";
 
 const ROAST_LEVELS = {
   low:    { label: "🟡 MEDIUM RARE",  color: chalk.yellow },
@@ -12,7 +13,7 @@ const ROAST_LEVELS = {
 /**
  * Renders the full roast output to the terminal.
  */
-export function renderRoast(roastData, stats, options = {}) {
+export async function renderRoast(roastData, stats, options = {}) {
   const { savage, compliment } = options;
   const s = stats.stats;
 
@@ -92,6 +93,21 @@ export function renderRoast(roastData, stats, options = {}) {
       "  💡 Tip: Share your roast on Twitter and tag your team with --author\n"
     )
   );
+
+  if (options.share) {
+    const output = typeof options.share === "string" ? options.share : "roast.png";
+    try {
+      const file = await generateShareCard(roastData, stats, {
+        savage,
+        compliment,
+        output,
+      });
+      console.log(chalk.green(`\n  ✅ Share card saved to: ${file}\n`));
+    } catch (err) {
+      console.error(chalk.red("\n  ✗ Failed to generate shareable card."));
+      console.error(chalk.dim(`  ${err.message}\n`));
+    }
+  }
 }
 
 /** Prints a labeled stat with optional red highlight */
