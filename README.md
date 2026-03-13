@@ -52,6 +52,18 @@ npm install -g .
 gitblame-roast
 ```
 
+## GitHub Actions (CI)
+
+This repo includes a GitHub Actions workflow that runs a short roast on every push and pull request.
+
+### Setup
+1. Add your Gemini API key to the repo secrets:
+   - `Settings → Secrets and variables → Actions → New repository secret`
+   - Name: `GEMINI_API_KEY`
+   - Value: your Gemini API key
+
+2. The workflow will run automatically on push/pr.
+
 ---
 
 ## Usage
