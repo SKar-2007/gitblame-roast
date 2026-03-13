@@ -2,7 +2,7 @@
 
 > Let AI roast your git history. Because someone has to.
 
-A CLI tool that analyzes your git commits and uses Claude AI to deliver a brutally funny roast of your worst coding habits — bad commit messages, 3am pushes, massive code dumps, and more.
+A CLI tool that analyzes your git commits and uses Google Gemini to deliver a brutally funny roast of your worst coding habits — bad commit messages, 3am pushes, massive code dumps, and more.
 
 ---
 
@@ -23,22 +23,19 @@ npm install
 
 # Set your API key (Google Gemini)
 
-This project is configured to use **Google Gemini** by default via the `GEMINI_API_KEY` environment variable.
+This project is configured to use **Google Gemini** via the `GEMINI_API_KEY` environment variable.
 
 ### Option A — `.env` (recommended)
 Create a `.env` file in the project root (this file is gitignored):
 
 ```env
-GEMINI_API_KEY=AIzaSyB0ZCenmBiuMduFNuiMdTpqdki7uGwDfN8
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### Option B — environment variable
 ```bash
-export GEMINI_API_KEY=AIzaSyB0ZCenmBiuMduFNuiMdTpqdki7uGwDfN8
+export GEMINI_API_KEY=your_gemini_api_key_here
 ```
-
-> If you also set `ANTHROPIC_API_KEY`, Gemini will still be used unless you explicitly force Anthropic:
-> `export ROASTER_PROVIDER=anthropic`
 
 # Run it
 
@@ -156,7 +153,7 @@ gitblame-roast/
 │   ├── analyzers/
 │   │   └── gitAnalyzer.js      # Parses git log into stats
 │   ├── roast/
-│   │   └── aiRoaster.js        # Calls Claude API to roast
+│   │   └── aiRoaster.js        # Calls Gemini API to roast
 │   ├── utils/
 │   │   └── renderer.js         # Terminal display / formatting
 │   └── commands/

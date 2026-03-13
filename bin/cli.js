@@ -25,7 +25,6 @@ program
   .option("-s, --savage", "No mercy mode 💀")
   .option("-n, --limit <number>", "Number of commits to analyze", "100")
   .option("--compliment", "Compliment mode (for fragile devs 🌸)")
-  .option("--provider <provider>", "AI provider to use (gemini or anthropic)")
   .action(runRoast);
 
 program.parse();

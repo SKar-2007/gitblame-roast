@@ -12,17 +12,15 @@ dotenv.config();
  * Main command handler — orchestrates analysis → roast → render.
  */
 export async function runRoast(options) {
-  const { repo, author, savage, compliment, limit, provider } = options;
+  const { repo, author, savage, compliment, limit } = options;
 
   // ─── Check for API key ────────────────────────────────────────────
-  if (!process.env.ANTHROPIC_API_KEY && !process.env.GEMINI_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     console.error(
       chalk.red("\n  ✗ Missing API key environment variable.\n") +
         chalk.dim(
-          "  Set your Gemini key (recommended):\n" +
-            "  export GEMINI_API_KEY=your_key_here\n\n" +
-            "  (Optional) Or set Anthropic instead:\n" +
-            "  export ANTHROPIC_API_KEY=your_key_here\n"
+          "  Set your Gemini key:\n" +
+            "  export GEMINI_API_KEY=your_key_here\n"
         )
     );
     process.exit(1);
@@ -67,7 +65,6 @@ export async function runRoast(options) {
       savage,
       compliment,
       author,
-      provider,
     });
     roastSpinner.succeed(chalk.green("Roast ready. Brace yourself."));
   } catch (err) {

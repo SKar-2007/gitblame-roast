@@ -1,24 +1,8 @@
-const PROVIDER =
-  process.env.ROASTER_PROVIDER?.toLowerCase() ||
-  (process.env.GEMINI_API_KEY ? "gemini" : "anthropic");
+const PROVIDER = "gemini";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "text-bison-001";
-
-let anthropicClient;
-async function getAnthropicClient() {
-  if (!anthropicClient) {
-    if (!ANTHROPIC_API_KEY) {
-      throw new Error(
-        "Missing ANTHROPIC_API_KEY. Set it or switch to Gemini (GEMINI_API_KEY)."
-      );
-    }
-    const { default: Anthropic } = await import("@anthropic-ai/sdk");
-    anthropicClient = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
-  }
-  return anthropicClient;
-}
+// Use a modern Gemini generation model by default (2026+).
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5";
 
 /**
  * Calls the configured LLM to generate a roast based on git stats.
@@ -26,57 +10,13 @@ async function getAnthropicClient() {
  * @param {object} options - { savage, compliment, author }
  */
 export async function generateRoast(stats, options = {}) {
-  const provider = options.provider?.toLowerCase() || PROVIDER;
-
-  if (provider === "gemini") {
-    return generateRoastWithGemini(stats, options);
-  }
-  if (provider === "anthropic") {
-    return generateRoastWithAnthropic(stats, options);
-  }
-
-  throw new Error(
-    `Unknown provider requested: ${provider}. Use "gemini" or "anthropic".`
-  );
-}
-
-async function generateRoastWithAnthropic(stats, options = {}) {
-  const { savage = false, compliment = false, author } = options;
-
-  const tone = compliment
-    ? "You are a warm, encouraging tech mentor. Be genuinely positive."
-    : savage
-    ? "You are a ruthless, savage tech comedian. ZERO mercy. Brutal honesty only."
-    : "You are a witty developer comedian. Be funny but not too mean.";
-
-  const prompt = buildPrompt(stats, author);
-
-  const client = await getAnthropicClient();
-  const message = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1024,
-    messages: [
-      {
-        role: "user",
-        content: `${tone}\n\nHere is the git history analysis data:\n\n${prompt}\n\nGenerate a funny roast of this developer's git habits. 
-        
-        Format your response EXACTLY like this (keep the labels):
-        OPENING: <one punchy opening line>
-        ROAST: <the main roast, 3-5 sentences, specific to the data>
-        WORST_COMMIT: <roast of their single worst commit>
-        CLOSING: <a funny closing one-liner or advice>
-        TITLE: <give them a funny developer title e.g. "The Midnight Cowboy" or "Lord of WIP">`,
-      },
-    ],
-  });
-
-  return parseRoastResponse(message.content[0].text);
+  return generateRoastWithGemini(stats, options);
 }
 
 async function generateRoastWithGemini(stats, options = {}) {
   if (!GEMINI_API_KEY) {
     throw new Error(
-      "Missing GEMINI_API_KEY. Set it to use Gemini instead of Anthropic."
+      "Missing GEMINI_API_KEY. Set it to use Gemini."
     );
   }
 
@@ -174,7 +114,7 @@ function buildPrompt(stats, author) {
   return lines.join("\n");
 }
 
-/** Parse the structured response from Claude */
+/** Parse the structured response from Gemini */
 function parseRoastResponse(text) {
   const extract = (key) => {
     const match = text.match(new RegExp(`${key}:\\s*(.+?)(?=\\n[A-Z_]+:|$)`, "s"));
