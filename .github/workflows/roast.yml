@@ -24,8 +24,31 @@ jobs:
         run: npm ci
 
       - name: Run roast (Gemini)
+        id: roast
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           echo "Running roast (limit 10 commits)"
-          npm run roast -- --limit 10
+          npm run roast -- --limit 10 | tee roast.txt
+          echo "roast_output<<EOF" >> $GITHUB_OUTPUT
+          cat roast.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Comment roast in PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## 🔥 GitBlame Roast
+            **Commit:** `${{ github.sha }}`
+            **Triggered by:** `${{ github.actor }}`
+
+            <details>
+            <summary>Roast output (click to expand)</summary>
+
+            ```
+            ${{ steps.roast.outputs.roast_output }}
+            ```
+            </details>
