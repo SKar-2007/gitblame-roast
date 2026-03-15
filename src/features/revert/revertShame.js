@@ -1,5 +1,5 @@
 import simpleGit from "simple-git";
-import { callGemini } from "../roast/geminiClient.js";
+import { callGemini } from "../../roast/geminiClient.js";
 
 const REVERT_PATTERNS = [
   /^revert[:\s]/i,

@@ -11,17 +11,28 @@ import { runTeamLeaderboard } from "../src/commands/team.js";
 import { runRevertShame } from "../src/commands/reverts.js";
 import { runHeatmap } from "../src/commands/heatmap.js";
 import { runBadge } from "../src/commands/badge.js";
+import { runPersonality } from "../src/commands/personality.js";
+import { runPRs } from "../src/commands/prs.js";
+import { runTickets } from "../src/commands/tickets.js";
+import { runReplay } from "../src/commands/replay.js";
+import { runStreak } from "../src/commands/streak.js";
+import { runEmail } from "../src/commands/email.js";
+import { runDashboard } from "../src/commands/dashboard.js";
 
-// Print the banner
-console.log(
-  gradient.passion(figlet.textSync("GitBlame Roast", { font: "Small" }))
-);
-console.log(chalk.dim("  🔥 Your codebase is about to catch these flames\n"));
+const header = gradient.passion(figlet.textSync("GitBlame Roast", { font: "Small" }));
+const subtitle = chalk.dim("  🔥 Your codebase is about to catch these flames\n");
+
+const isHelpMode = process.argv.includes("--help") || process.argv.includes("-h");
+if (!isHelpMode) {
+  console.log(header);
+  console.log(subtitle);
+}
 
 program
   .name("gitblame-roast")
   .description("Roast your git history with AI 🔥")
-  .version("3.0.0");
+  .version("3.0.0")
+  .addHelpText("beforeAll", `${header}\n${subtitle}`);
 
 program
   .command("roast", { isDefault: true })
@@ -91,5 +102,57 @@ program
   .option("-n, --limit <number>", "Commits to analyze", "200")
   .option("--name <repoName>", "Repo name for badge link")
   .action(runBadge);
+
+program
+  .command("personality")
+  .description("Analyze your dev personality from commit history 🧠")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-a, --author <name>", "Only analyze a specific author")
+  .option("-n, --limit <number>", "Commits to analyze", "200")
+  .action(runPersonality);
+
+program
+  .command("prs")
+  .description("Roast pull request merge messages 🧪")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Merge commits to analyze", "200")
+  .action(runPRs);
+
+program
+  .command("tickets")
+  .description("Detect ticket IDs in commit messages and roast the discipline 🎟️")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "200")
+  .action(runTickets);
+
+program
+  .command("replay")
+  .description("Show a week-by-week roast score timeline 🎬")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-w, --weeks <number>", "Weeks to include", "24")
+  .action(runReplay);
+
+program
+  .command("streak")
+  .description("Track your daily shame streak 🔥")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "300")
+  .action(runStreak);
+
+program
+  .command("email")
+  .description("Generate a savage weekly digest email ✉️")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "300")
+  .option("-o, --output <dir>", "Output directory for email HTML", "./output")
+  .option("--team <name>", "Team name to show in the email")
+  .option("--repo-name <name>", "Repo name to show in the email")
+  .action(runEmail);
+
+program
+  .command("dashboard")
+  .description("Launch an interactive TUI dashboard")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .action(runDashboard);
 
 program.parse();

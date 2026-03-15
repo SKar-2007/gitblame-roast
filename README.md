@@ -103,6 +103,27 @@ gitblame-roast reverts
 # View your commit heatmap
 gitblame-roast heatmap
 
+# Roast PR merge descriptions
+gitblame-roast prs
+
+# Detect missing ticket IDs in commits
+gitblame-roast tickets
+
+# Track your shame streak
+gitblame-roast streak
+
+# Replay roast score over time
+gitblame-roast replay
+
+# Get a developer personality roast
+gitblame-roast personality
+
+# Generate a weekly digest email
+gitblame-roast email
+
+# Interactive dashboard
+gitblame-roast dashboard
+
 # Generate a README badge with your roast score
 gitblame-roast badge
 
@@ -181,20 +202,33 @@ gitblame-roast/
 │   │   ├── aiRoaster.js        # Calls Gemini API to roast
 │   │   └── geminiClient.js     # Shared Gemini HTTP client
 │   ├── features/
-│   │   ├── branchRoaster.js    # Branch name analysis + roast
-│   │   ├── todoGraveyard.js    # TODO scanner + roast
-│   │   ├── teamLeaderboard.js  # Team roast leaderboard
-│   │   ├── revert/revertShame.js # Revert + panic commit analyzer and roast
+│   │   ├── branchRoaster.js      # Branch name analysis + roast
+│   │   ├── todoGraveyard.js      # TODO scanner + roast
+│   │   ├── teamLeaderboard.js    # Team roast leaderboard
 │   │   ├── heatmap/commitHeatmap.js # Commit heatmap generator + renderer
-│   │   └── badge/roastBadge.js # README badge generator
+│   │   ├── badge/roastBadge.js   # README badge generator
+│   │   ├── personality/personality.js # Developer personality analyzer
+│   │   ├── pr/prAnalyzer.js      # PR merge description analyzer + roast
+│   │   ├── replay/replay.js      # Roast score replay timeline
+│   │   ├── streak/roastStreak.js # Shame streak analyzer + roast
+│   │   ├── tickets/ticketDetector.js # Ticket ID detector + roast
+│   │   ├── email/weeklyEmail.js  # Generate weekly digest email
+│   │   └── dashboard/dashboard.js # Interactive CLI dashboard
 │   ├── commands/
-│   │   ├── roast.js            # Main roast command
-│   │   ├── todos.js            # TODO roast command
-│   │   ├── branches.js         # Branch roast command
-│   │   ├── team.js             # Team leaderboard command
-│   │   ├── reverts.js          # Revert roast command
-│   │   ├── heatmap.js          # Commit heatmap command
-│   │   └── badge.js            # Roast badge command
+│   │   ├── roast.js              # Main roast command
+│   │   ├── todos.js              # TODO roast command
+│   │   ├── branches.js           # Branch roast command
+│   │   ├── team.js               # Team leaderboard command
+│   │   ├── reverts.js            # Revert roast command
+│   │   ├── heatmap.js            # Commit heatmap command
+│   │   ├── badge.js              # Roast badge command
+│   │   ├── personality.js         # Developer personality command
+│   │   ├── prs.js                # PR merge description command
+│   │   ├── tickets.js            # Ticket detector command
+│   │   ├── replay.js             # Roast replay command
+│   │   ├── streak.js             # Shame streak command
+│   │   ├── email.js              # Weekly email command
+│   │   └── dashboard.js          # Interactive dashboard command
 │   └── utils/
 │       └── renderer.js         # Terminal output formatting
 ├── package.json
