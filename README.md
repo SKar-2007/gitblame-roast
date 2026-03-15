@@ -97,6 +97,15 @@ gitblame-roast branches
 # Roast team members based on commit stats
 gitblame-roast team
 
+# Roast reverts + panic commits
+gitblame-roast reverts
+
+# View your commit heatmap
+gitblame-roast heatmap
+
+# Generate a README badge with your roast score
+gitblame-roast badge
+
 # Analyze more commits
 gitblame-roast --limit 500
 ```
@@ -131,7 +140,7 @@ gitblame-roast --limit 500
     "wip" ×5
 
 ╔══════════════════════════════════════════╗
-║           🔥 THE ROAST 🔥               ║
+║           🔥 THE ROAST 🔥                ║
 ║                                          ║
 ║  Welcome, John — the Kafka of codebases. ║
 ║                                          ║
@@ -141,16 +150,16 @@ gitblame-roast --limit 500
 ║  94 files changed. That's not a commit,  ║
 ║  that's a hostage situation.             ║
 ║                                          ║
-║  ────────────────────────────────────── ║
-║  💀 Worst Commit Award:                 ║
+║  ──────────────────────────────────────  ║
+║  💀 Worst Commit Award:                  ║
 ║  "stuff" at 2:47am on a Tuesday.         ║
 ║  What stuff, John. WHAT STUFF.           ║
 ║                                          ║
-║  🏆 Your Developer Title:               ║
+║  🏆 Your Developer Title:                ║
 ║  "The Midnight Caffeinated Chaos Agent"  ║
 ║                                          ║
 ║  Commit messages exist for a reason.     ║
-║  That reason is so future-you doesn't   ║
+║  That reason is so future-you doesn't    ║
 ║  cry. Consider it.                       ║
 ╚══════════════════════════════════════════╝
 
@@ -174,12 +183,18 @@ gitblame-roast/
 │   ├── features/
 │   │   ├── branchRoaster.js    # Branch name analysis + roast
 │   │   ├── todoGraveyard.js    # TODO scanner + roast
-│   │   └── teamLeaderboard.js  # Team roast leaderboard
+│   │   ├── teamLeaderboard.js  # Team roast leaderboard
+│   │   ├── revert/revertShame.js # Revert + panic commit analyzer and roast
+│   │   ├── heatmap/commitHeatmap.js # Commit heatmap generator + renderer
+│   │   └── badge/roastBadge.js # README badge generator
 │   ├── commands/
 │   │   ├── roast.js            # Main roast command
 │   │   ├── todos.js            # TODO roast command
 │   │   ├── branches.js         # Branch roast command
-│   │   └── team.js             # Team leaderboard command
+│   │   ├── team.js             # Team leaderboard command
+│   │   ├── reverts.js          # Revert roast command
+│   │   ├── heatmap.js          # Commit heatmap command
+│   │   └── badge.js            # Roast badge command
 │   └── utils/
 │       └── renderer.js         # Terminal output formatting
 ├── package.json
@@ -194,6 +209,9 @@ gitblame-roast/
 - [x] `--team` flag: Roast all authors, generate a leaderboard
 - [x] `todos` command: Roast TODO comments found in repo
 - [x] `branches` command: Roast shameful branch names
+- [x] `reverts` command: Roast your revert + panic commit history
+- [x] `heatmap` command: Show commit heatmap (shame calendar)
+- [x] `badge` command: Generate a README roast score badge
 - [x] `--json-output` flag: Emit machine-readable roast JSON
 - [ ] GitHub Action: Auto-roast every PR as a bot comment
 - [ ] `--export` flag: Save roast as Markdown file

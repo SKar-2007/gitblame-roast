@@ -8,6 +8,9 @@ import { runRoast } from "../src/commands/roast.js";
 import { runTodoGraveyard } from "../src/commands/todos.js";
 import { runBranchRoast } from "../src/commands/branches.js";
 import { runTeamLeaderboard } from "../src/commands/team.js";
+import { runRevertShame } from "../src/commands/reverts.js";
+import { runHeatmap } from "../src/commands/heatmap.js";
+import { runBadge } from "../src/commands/badge.js";
 
 // Print the banner
 console.log(
@@ -18,7 +21,7 @@ console.log(chalk.dim("  🔥 Your codebase is about to catch these flames\n"));
 program
   .name("gitblame-roast")
   .description("Roast your git history with AI 🔥")
-  .version("1.0.0");
+  .version("3.0.0");
 
 program
   .command("roast", { isDefault: true })
@@ -64,5 +67,29 @@ program
   .option("-n, --limit <number>", "Commits to analyze", "500")
   .option("-s, --savage", "No mercy mode")
   .action(runTeamLeaderboard);
+
+program
+  .command("reverts")
+  .description("Expose and roast your revert history 🔁")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "200")
+  .option("-s, --savage", "No mercy mode")
+  .action(runRevertShame);
+
+program
+  .command("heatmap")
+  .description("Visualize when you commit (shame calendar) 🗺️")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to map", "500")
+  .option("-a, --author <n>", "Filter to one author")
+  .action(runHeatmap);
+
+program
+  .command("badge")
+  .description("Generate a roast score badge for your README 🏅")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "200")
+  .option("--name <repoName>", "Repo name for badge link")
+  .action(runBadge);
 
 program.parse();

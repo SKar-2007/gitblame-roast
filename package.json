@@ -1,6 +1,6 @@
 {
   "name": "gitblame-roast",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Roast your git history with AI 🔥",
   "type": "module",
   "bin": {
