@@ -4,12 +4,12 @@
   "description": "Roast your git history with AI 🔥",
   "type": "module",
   "bin": {
-    "gitblame-roast": "./cli.js"
+    "gitblame-roast": "./bin/cli.js"
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
-    "start": "node cli.js",
-    "dev": "node --watch cli.js",
+    "start": "node bin/cli.js",
+    "dev": "node --watch bin/cli.js",
     "roast": "node bin/cli.js roast"
   },
   "dependencies": {

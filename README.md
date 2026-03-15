@@ -85,6 +85,18 @@ gitblame-roast --compliment
 # (optional output path, default: roast.png)
 gitblame-roast --share
 
+# Save JSON output (use in CI)
+gitblame-roast --json-output roast.json
+
+# Roast TODOs found in repo
+gitblame-roast todos
+
+# Roast branch names
+gitblame-roast branches
+
+# Roast team members based on commit stats
+gitblame-roast team
+
 # Analyze more commits
 gitblame-roast --limit 500
 ```
@@ -157,11 +169,19 @@ gitblame-roast/
 │   ├── analyzers/
 │   │   └── gitAnalyzer.js      # Parses git log into stats
 │   ├── roast/
-│   │   └── aiRoaster.js        # Calls Gemini API to roast
-│   ├── utils/
-│   │   └── renderer.js         # Terminal display / formatting
-│   └── commands/
-│       └── roast.js            # Main command orchestrator
+│   │   ├── aiRoaster.js        # Calls Gemini API to roast
+│   │   └── geminiClient.js     # Shared Gemini HTTP client
+│   ├── features/
+│   │   ├── branchRoaster.js    # Branch name analysis + roast
+│   │   ├── todoGraveyard.js    # TODO scanner + roast
+│   │   └── teamLeaderboard.js  # Team roast leaderboard
+│   ├── commands/
+│   │   ├── roast.js            # Main roast command
+│   │   ├── todos.js            # TODO roast command
+│   │   ├── branches.js         # Branch roast command
+│   │   └── team.js             # Team leaderboard command
+│   └── utils/
+│       └── renderer.js         # Terminal output formatting
 ├── package.json
 └── README.md
 ```
@@ -171,11 +191,13 @@ gitblame-roast/
 ## Roadmap
 
 - [x] `--share` flag: Generate a shareable PNG card
-- [ ] `--team` flag: Roast all authors, generate a leaderboard
+- [x] `--team` flag: Roast all authors, generate a leaderboard
+- [x] `todos` command: Roast TODO comments found in repo
+- [x] `branches` command: Roast shameful branch names
+- [x] `--json-output` flag: Emit machine-readable roast JSON
 - [ ] GitHub Action: Auto-roast every PR as a bot comment
-- [ ] Detect TODO comments older than 1 year
-- [ ] Detect copy-pasted code blocks across files
 - [ ] `--export` flag: Save roast as Markdown file
+- [ ] Detect copy-pasted code blocks across files
 
 ---
 

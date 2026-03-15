@@ -5,6 +5,9 @@ import chalk from "chalk";
 import figlet from "figlet";
 import gradient from "gradient-string";
 import { runRoast } from "../src/commands/roast.js";
+import { runTodoGraveyard } from "../src/commands/todos.js";
+import { runBranchRoast } from "../src/commands/branches.js";
+import { runTeamLeaderboard } from "../src/commands/team.js";
 
 // Print the banner
 console.log(
@@ -29,6 +32,37 @@ program
     "--share [output]",
     "Generate a shareable PNG card of the roast (default: roast.png)"
   )
+  .option(
+    "--json-output <file>",
+    "Save roast results as JSON (for GitHub Actions or automation)"
+  )
   .action(runRoast);
+
+program
+  .command("todos")
+  .description("Excavate and roast your TODO graveyard 💀")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-s, --savage", "No mercy mode")
+  .option(
+    "--min-age <days>",
+    "Only show TODOs older than N days",
+    "0"
+  )
+  .action(runTodoGraveyard);
+
+program
+  .command("branches")
+  .description("Roast your shameful branch names 🌿")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-s, --savage", "No mercy mode")
+  .action(runBranchRoast);
+
+program
+  .command("team")
+  .description("Rank and roast the entire team 👥")
+  .option("-r, --repo <path>", "Path to the git repo", ".")
+  .option("-n, --limit <number>", "Commits to analyze", "500")
+  .option("-s, --savage", "No mercy mode")
+  .action(runTeamLeaderboard);
 
 program.parse();

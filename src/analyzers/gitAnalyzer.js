@@ -20,10 +20,18 @@ export async function analyzeRepo(repoPath = ".", options = {}) {
   const rawLog = await git.raw(["log", ...logOptions]);
   const commits = parseLog(rawLog);
 
+  const branch = await git.revparse(["--abbrev-ref", "HEAD"]);
+  const head = await git.revparse(["HEAD"]);
+
   return {
     commits,
     stats: buildStats(commits),
     repoPath,
+    repoInfo: {
+      branch: branch.trim(),
+      head: head.trim(),
+      shortHead: head.trim().slice(0, 7),
+    },
   };
 }
 

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import ora from "ora";
 import chalk from "chalk";
+import fs from "fs";
 import { analyzeRepo } from "../analyzers/gitAnalyzer.js";
 import { generateRoast } from "../roast/aiRoaster.js";
 import { renderRoast } from "../utils/renderer.js";
@@ -12,7 +13,7 @@ dotenv.config();
  * Main command handler — orchestrates analysis → roast → render.
  */
 export async function runRoast(options) {
-  const { repo, author, savage, compliment, limit, share } = options;
+  const { repo, author, savage, compliment, limit, share, jsonOutput } = options;
 
   // ─── Check for API key ────────────────────────────────────────────
   if (!process.env.GEMINI_API_KEY) {
@@ -75,4 +76,24 @@ export async function runRoast(options) {
 
   // ─── Step 3: Render output ────────────────────────────────────────
   await renderRoast(roastData, stats, { savage, compliment, share });
+
+  // ─── Optional: JSON output for automation/GitHub Actions ───────────
+  if (jsonOutput) {
+    const payload = {
+      ...roastData,
+      stats: {
+        totalCommits: stats.stats.totalCommits,
+        lateNightCommits: stats.stats.lateNightCommits,
+        lazyMessages: stats.stats.lazyMessages?.length ?? 0,
+        biggestCommit: stats.stats.biggestCommit,
+      },
+    };
+
+    try {
+      await fs.promises.writeFile(jsonOutput, JSON.stringify(payload, null, 2), "utf-8");
+      console.log(chalk.dim(`\n  📄 JSON saved to ${jsonOutput}`));
+    } catch (err) {
+      console.error(chalk.red(`\n  ✗ Failed to write JSON output: ${err.message}`));
+    }
+  }
 }
