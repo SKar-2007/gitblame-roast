@@ -3,7 +3,9 @@
   "version": "5.0.0",
   "description": "Roast your git history with AI 🔥 — 16 commands, PDF reports, config system",
   "type": "module",
-  "bin": { "gitblame-roast": "./bin/cli.js" },
+  "bin": {
+    "gitblame-roast": "./bin/cli.js"
+  },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "start": "node bin/cli.js",
@@ -31,16 +33,33 @@
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "commander": "^12.0.0",
-    "dotenv": "^16.1.4",
+    "dotenv": "^16.6.1",
     "figlet": "^1.7.0",
     "gradient-string": "^2.0.2",
     "inquirer": "^9.2.15",
     "ora": "^8.0.1",
     "simple-git": "^3.22.0"
   },
-  "optionalDependencies": { "puppeteer": "^22.0.0" },
-  "engines": { "node": ">=18.0.0" },
-  "files": ["bin/", "src/", "README.md"],
-  "keywords": ["git","cli","roast","ai","humor","developer-tools","terminal","pdf"],
+  "optionalDependencies": {
+    "puppeteer": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "keywords": [
+    "git",
+    "cli",
+    "roast",
+    "ai",
+    "humor",
+    "developer-tools",
+    "terminal",
+    "pdf"
+  ],
   "license": "MIT"
 }
