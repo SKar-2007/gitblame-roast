@@ -127,6 +127,17 @@ gitblame-roast dashboard
 # Generate a README badge with your roast score
 gitblame-roast badge
 
+# Generate a monthly PDF report
+# Requires ANTHROPIC_API_KEY in env (Anthropic Claude/Claude 3)
+gitblame-roast report
+
+# Use config file
+# Creates a starter .roastrc.json (then edit to adjust settings)
+gitblame-roast config init
+
+# Inspect current config
+gitblame-roast config show
+
 # Analyze more commits
 gitblame-roast --limit 500
 ```

@@ -1,29 +1,46 @@
 {
   "name": "gitblame-roast",
-  "version": "3.0.0",
-  "description": "Roast your git history with AI 🔥",
+  "version": "5.0.0",
+  "description": "Roast your git history with AI 🔥 — 16 commands, PDF reports, config system",
   "type": "module",
-  "bin": {
-    "gitblame-roast": "./bin/cli.js"
-  },
+  "bin": { "gitblame-roast": "./bin/cli.js" },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "start": "node bin/cli.js",
     "dev": "node --watch bin/cli.js",
-    "roast": "node bin/cli.js roast"
+    "roast": "node bin/cli.js roast",
+    "report": "node bin/cli.js report",
+    "dashboard": "node bin/cli.js dashboard",
+    "streak": "node bin/cli.js streak",
+    "personality": "node bin/cli.js personality",
+    "replay": "node bin/cli.js replay",
+    "email": "node bin/cli.js email",
+    "tickets": "node bin/cli.js tickets",
+    "prs": "node bin/cli.js prs",
+    "heatmap": "node bin/cli.js heatmap",
+    "badge": "node bin/cli.js badge",
+    "team": "node bin/cli.js team",
+    "todos": "node bin/cli.js todos",
+    "branches": "node bin/cli.js branches",
+    "reverts": "node bin/cli.js reverts",
+    "config:init": "node bin/cli.js config init",
+    "config:show": "node bin/cli.js config show"
   },
   "dependencies": {
-    "simple-git": "^3.22.0",
-    "commander": "^12.0.0",
-    "chalk": "^5.3.0",
-    "ora": "^8.0.1",
-    "inquirer": "^9.2.15",
+    "@anthropic-ai/sdk": "^0.20.0",
     "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
     "dotenv": "^16.1.4",
     "figlet": "^1.7.0",
     "gradient-string": "^2.0.2",
-    "puppeteer": "^21.4.1"
+    "inquirer": "^9.2.15",
+    "ora": "^8.0.1",
+    "simple-git": "^3.22.0"
   },
-  "keywords": ["git", "cli", "roast", "ai", "humor", "developer-tools"],
+  "optionalDependencies": { "puppeteer": "^22.0.0" },
+  "engines": { "node": ">=18.0.0" },
+  "files": ["bin/", "src/", "README.md"],
+  "keywords": ["git","cli","roast","ai","humor","developer-tools","terminal","pdf"],
   "license": "MIT"
 }
