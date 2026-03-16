@@ -21,20 +21,25 @@ npm install
 ./scripts/bootstrap.sh
 ```
 
-# Set your API key (Google Gemini)
+# API Keys
 
-This project is configured to use **Google Gemini** via the `GEMINI_API_KEY` environment variable.
+This project uses different APIs depending on the command you're running:
+
+- **Gemini (Google)** for the main roast commands (`roast`, `todos`, `prs`, `tickets`, etc.)
+- **Anthropic** for the `report` command (PDF report generation)
 
 ### Option A — `.env` (recommended)
 Create a `.env` file in the project root (this file is gitignored):
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
 
-### Option B — environment variable
+### Option B — environment variables
 ```bash
 export GEMINI_API_KEY=your_gemini_api_key_here
+export ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
 
 # Run it
@@ -129,6 +134,7 @@ gitblame-roast badge
 
 # Generate a monthly PDF report
 # Requires ANTHROPIC_API_KEY in env (Anthropic Claude/Claude 3)
+# Output is written to `./output/` by default
 gitblame-roast report
 
 # Use config file
@@ -224,7 +230,11 @@ gitblame-roast/
 │   │   ├── streak/roastStreak.js # Shame streak analyzer + roast
 │   │   ├── tickets/ticketDetector.js # Ticket ID detector + roast
 │   │   ├── email/weeklyEmail.js  # Generate weekly digest email
-│   │   └── dashboard/dashboard.js # Interactive CLI dashboard
+│   │   ├── dashboard/dashboard.js # Interactive CLI dashboard
+│   │   ├── config/roastConfig.js # Config file loader & defaults
+│   │   └── pdf/
+│   │       ├── pdfReport.js      # PDF report orchestrator
+│   │       └── generateReport.py  # ReportLab PDF renderer
 │   ├── commands/
 │   │   ├── roast.js              # Main roast command
 │   │   ├── todos.js              # TODO roast command
@@ -239,7 +249,9 @@ gitblame-roast/
 │   │   ├── replay.js             # Roast replay command
 │   │   ├── streak.js             # Shame streak command
 │   │   ├── email.js              # Weekly email command
-│   │   └── dashboard.js          # Interactive dashboard command
+│   │   ├── dashboard.js          # Interactive dashboard command
+│   │   ├── report.js             # Monthly PDF report command
+│   │   └── config.js             # .roastrc config command
 │   └── utils/
 │       └── renderer.js         # Terminal output formatting
 ├── package.json
